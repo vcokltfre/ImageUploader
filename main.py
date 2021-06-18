@@ -14,7 +14,6 @@ load_dotenv()
 Path("./images").mkdir(exist_ok=True)
 
 app = FastAPI(openapi_url=None)
-app.mount("/i", StaticFiles(directory="./images"), "images")
 
 @app.post("/upload/{name}")
 async def upload(name: str, request: Request, file: bytes = File(...)) -> Response:
@@ -25,3 +24,5 @@ async def upload(name: str, request: Request, file: bytes = File(...)) -> Respon
         f.write(file)
 
     return Response(status_code=204)
+
+app.mount("", StaticFiles(directory="./images"), "images")
